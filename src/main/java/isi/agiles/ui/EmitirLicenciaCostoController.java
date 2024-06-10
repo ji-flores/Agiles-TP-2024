@@ -108,6 +108,8 @@ public class EmitirLicenciaCostoController implements Initializable{
         try{
             GestorLicencia.altaLicencia(licencia);
             licenciaDadaDeAlta();
+            Stage currentStage = (Stage) botonVolverAtras.getScene().getWindow();
+            App.cambiarVentana("MenuPrincipal.fxml",currentStage);
 
         }
         catch(ObjetoNoEncontradoException ex){
