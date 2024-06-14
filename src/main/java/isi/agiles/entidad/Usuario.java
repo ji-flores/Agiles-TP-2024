@@ -9,7 +9,7 @@ import org.hibernate.annotations.CollectionId;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "usuario",uniqueConstraints = {@UniqueConstraint(columnNames={"nroDoc","tipoDoc"})})
+@Table(name = "usuario",uniqueConstraints = {@UniqueConstraint(columnNames={"numeroDoc","tipoDoc"})})
 public class Usuario {
 
     @Id
