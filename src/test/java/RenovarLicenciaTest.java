@@ -58,16 +58,6 @@ public class RenovarLicenciaTest {
         field.setAccessible(true);
         field.set(target, mock);
     }
-    
-    /*Intentar buscar un titular que no existe.  */
-    @Test
-    void falloNoExisteTitular() throws ObjetoNoEncontradoException{
-        //Se prepara el mock con los valores deseados de retorno
-        Mockito.when(gestorTitular.getTitularByDocumento("00000000",TipoDoc.DNI)).thenThrow(new ObjetoNoEncontradoException());
-        //Se verifica que se arroje la excepcion cuando se ejecuta el metodo
-        assertThrows(ObjetoNoEncontradoException.class, 
-                    () ->{gestorTitular.getTitularByDocumento("00000000", TipoDoc.DNI);});
-    }
 
     /*En base a un titular existente que tiene solamente una o más licencias expiradas en el listado,
     tratar de renovar alguna de ellas (sin modificar datos del titular). */

@@ -9,7 +9,7 @@ import javafx.scene.text.Font;
 public class ErrorLicenciaAlert extends Alert {
     public ErrorLicenciaAlert(String msg){
         super(AlertType.ERROR, msg, ButtonType.CLOSE);
-        this.setTitle("Error al emitir Licencia");
+        this.setTitle("");
         this.setHeaderText(null);
         this.getDialogPane().getChildren().stream()
                 .filter(node -> node instanceof Label)

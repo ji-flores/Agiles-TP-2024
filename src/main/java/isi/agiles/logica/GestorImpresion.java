@@ -3,7 +3,9 @@ package isi.agiles.logica;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URISyntaxException;
+import java.security.CodeSource;
 import java.util.Map;
 
 import com.itextpdf.kernel.font.PdfFont;
@@ -28,13 +30,24 @@ public class GestorImpresion {
      */
     public Pair<PdfDocument,File> crearPdfDesdePlantilla(String templatePath, String outputFilename)
     throws FileNotFoundException, IOException, URISyntaxException{
-        //Se ubica al archivo de output en la carpeta de recursos pdf
-        File templateFile = new File(this.getClass().getResource(templatePath).toURI());
-        File outputFile = new File(templateFile.getParentFile(),outputFilename);
+        InputStream templateFile = this.getClass().getResourceAsStream(templatePath);
+        //Se ubica al archivo de output en una carpeta nueva junto con el jar.
+        File outputFile = this.createOutputFile(outputFilename);
         //Reader y Writer lanzan IOException si hay algun problema leyendo o escribiendo los archivos
         PdfReader reader = new PdfReader(templateFile);
         PdfWriter writer = new PdfWriter(outputFile);
         return new Pair<>(new PdfDocument(reader,writer),outputFile);
+    }
+
+    private File createOutputFile(String outputFilename)
+    throws URISyntaxException{
+        CodeSource codeSource = this.getClass().getProtectionDomain().getCodeSource();
+        File jarFile = new File(codeSource.getLocation().toURI());
+        File outputDirectory = new File(jarFile.getParentFile(),"/output");
+        if(!outputDirectory.exists()){
+            outputDirectory.mkdirs();
+        }
+        return new File(outputDirectory,outputFilename);
     }
 
     public Rectangle convertToUserUnits(Rectangle rectanglePx, float offsetX, float offsetY){
